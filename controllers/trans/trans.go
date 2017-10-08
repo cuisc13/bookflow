@@ -13,6 +13,14 @@ type TransController struct {
 func (this *TransController)SetUp(c echo.Context)error{
 	tra := models.NewTrans()
 	c.Bind(tra)
+	tra.Save()
+	return c.JSON(http.StatusOK, tra)
+}
+
+func (this *TransController)Settle(c echo.Context)error{
+	tra := new(models.Trans)
+	tra.Id = c.QueryParam("id")
+	tra.SetteleDown()
 	return c.JSON(http.StatusOK, tra)
 }
 

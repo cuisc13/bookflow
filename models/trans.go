@@ -19,6 +19,7 @@ type Trans struct {
 	To string `json:"to"`
 	Setup int64 `json:"setup"`
 	Settled int64 `json:"settled"`
+	Previous string `json:"previous"`
 }
 
 func (this *Trans)SetIndex(){
@@ -52,6 +53,12 @@ func NewTrans() *Trans{
 	tra.Id = tra.TransId()
 	tra.Setup = time.Now().Unix()
 	return tra
+}
+
+func (this *Trans)SetteleDown(){
+	this.Get()
+	this.Settled = time.Now().Unix()
+	this.Save()
 }
 
 func (this *Trans)TransId()string{
