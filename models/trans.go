@@ -35,6 +35,13 @@ func (this *Trans)Genesis(){
 	this.Save()
 }
 
+func (this *Trans)Get(){
+	val, _ := this.Client().Do("hget", TRANS_KEY, this.Id)
+	if len(val) > 1 {
+		*this = this.De(val[1])
+	}
+}
+
 func (this *Trans)Save(){
 	val := this.En()
 	this.Client().Do("hset", TRANS_KEY, this.Id, string(val))
@@ -61,7 +68,11 @@ func (this *Trans)TransId()string{
 }
 
 func (this *Trans)Del(){
+	this.Get()
+	fmt.Println(TRANS_INDEX_PREFIX+this.BookId)
 	this.Client().Do("hdel", TRANS_KEY, this.Id)
+	val,_ := this.Client().Do("zclear", TRANS_INDEX_PREFIX+this.BookId)
+	fmt.Println(val)
 }
 
 func (this *Trans)All(data *[]Trans){
@@ -89,7 +100,6 @@ func (this *Trans)Query(data *[]Trans){
 			trans_id_list = append(trans_id_list, val[j])
 		}
 		n_val, _ := this.Client().Do("multi_hget", TRANS_KEY,trans_id_list)
-		fmt.Println(n_val)
 		if len(n_val) > 1 {
 			for i:= 1;i < len(n_val);i+= 2 {
 				*data = append(*data, this.De(n_val[i+1]))
