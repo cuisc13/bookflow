@@ -29,6 +29,7 @@ func Register(g *echo.Group){
     trans_group := g.Group("/trans")
     {
         trans_group.POST("/setup", tra.SetUp)
+        trans_group.GET("/settle", tra.Settle)
         trans_group.GET("/list", tra.List)
         trans_group.POST("/rm", tra.Rm)
         trans_group.GET("/list_bookid", tra.List_bookid)
