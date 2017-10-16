@@ -1,5 +1,7 @@
 # Book Flow
 
+![图书漂流](https://upload.wikimedia.org/wikipedia/commons/e/e4/BookcrossingLyon.jpg)图片来自[Wikipedia 图书漂流 词条](https://zh.wikipedia.org/wiki/%E5%9B%BE%E4%B9%A6%E6%BC%82%E6%B5%81)
+
 # [文档](docs/SUMMARY.md)
 
 图书漂流管理系统, 尝试性项目， 利用一些新学的技术搭建一个管理 陌生人之间图书借阅（漂流）的系统。
