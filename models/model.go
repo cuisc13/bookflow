@@ -4,10 +4,13 @@ import (
 	"github.com/ssdb/gossdb/ssdb"
 	"cn/bkread/booktrans/conf"
 	"log"
+	"gopkg.in/mgo.v2"
+	"fmt"
 )
 
 var (
 	_Client *ssdb.Client
+	_MgoSession *mgo.Session
 )
 
 func init(){
@@ -17,4 +20,11 @@ func init(){
 		panic(err)
 	}
 	log.Println("Connetct to ssdb successed!")
+
+	_MgoSession, err = mgo.Dial(fmt.Sprintf("%s:%d", conf.MGOCONF.Host, conf.MGOCONF.Port))
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Connect to mongo successed!")
+
 }

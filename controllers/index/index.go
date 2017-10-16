@@ -10,5 +10,9 @@ type Index struct {
 }
 
 func (this *Index)Hello(c echo.Context) error {
-    return c.String(http.StatusOK, "Hello, 世界")
+    return c.Render(http.StatusOK,  "hello.html", "World")
+    //return c.Render(http.StatusOK, "index.html", "world")
+}
+func (this *Index)Vue(c echo.Context)error {
+    return c.Render(http.StatusOK, "index.html", "")
 }
