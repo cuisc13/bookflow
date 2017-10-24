@@ -98,10 +98,23 @@ func (this *Controller_stroy)List(c echo.Context)error{
 	p, _ := strconv.Atoi(c.QueryParam("p"))
 	skip := (p-1)*pn
 	selector := map[string]int{"cate":1,"title":1, "body":1}
-	story.GetPageData(skip, pn, selector, &storyList)
+	story.GetPageData(skip, pn, nil, selector, &storyList)
 
 	//time.Sleep(10*time.Second)
 
 	return c.JSON(http.StatusOK, storyList)
 }
 
+func (this *Controller_stroy)Search(c echo.Context)error{
+	story := new(models.Story)
+	storyList := []models.Story{}
+	pn, _ := strconv.Atoi(c.QueryParam("pn"))
+	p, _ := strconv.Atoi(c.QueryParam("p"))
+	kw := c.QueryParam("title")
+	skip := (p-1)*pn
+	selector := map[string]int{"cate":1,"title":1, "body":1}
+	query := map[string]interface{}{"title":map[string]string{"$regex":kw}}
+	total, _ := story.GetPageData(skip, pn, query, selector, &storyList)
+
+	return c.JSON(http.StatusOK, map[string]interface{}{"total":total, "story_list":storyList})
+}

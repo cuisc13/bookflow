@@ -42,5 +42,6 @@ func Register(g *echo.Group){
     {
         story_group.GET("/tell", story.Tell)
         story_group.GET("/list", story.List)
+        story_group.GET("/search", story.Search)
     }
 }

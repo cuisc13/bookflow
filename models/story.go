@@ -32,8 +32,11 @@ func (s *Story)Find(cname string, query, selector interface{})*mgo.Query{
 	return s.Database().C(cname).Find(query).Select(selector)
 }
 
-func (s *Story) GetPageData(skip, limit int, selector interface{}, data *[]Story) error {
-	return s.Find(s.CName(), nil, selector).Skip(skip).Limit(limit).All(data)
+func (s *Story) GetPageData(skip, limit int, query,selector interface{}, data *[]Story)(n int, err error){
+	q :=s.Find(s.CName(), query, selector)
+	n, err = q.Count()
+	err = q.Skip(skip).Limit(limit).All(data)
+	return
 }
 
 // GetSingleData 获取单条数据
