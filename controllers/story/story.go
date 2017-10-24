@@ -45,7 +45,7 @@ func getAudio(r io.Reader)(res []byte){
 }
 
 func (this *Controller_stroy)Tell(c echo.Context)error {
-	const JIE int = 1*1024
+	const JIE int = 1*200
 	id := c.QueryParam("id")
 	story := new(models.Story)
 	story.ID = bson.ObjectIdHex(id)
@@ -68,9 +68,7 @@ func (this *Controller_stroy)Tell(c echo.Context)error {
 	textRune := []rune(text)
 	if len(textRune) > JIE {
 		step := len(textRune)/JIE
-		fmt.Println("Total step ", step)
 		for i:= 0; i < step; i++ {
-			fmt.Println("Current step", i)
 			var sub []byte
 			if i == step-1 { // 判断是不是最后一步
 				body.tex = string(textRune[i*JIE:])
@@ -99,7 +97,10 @@ func (this *Controller_stroy)List(c echo.Context)error{
 	pn, _ := strconv.Atoi(c.QueryParam("pn"))
 	p, _ := strconv.Atoi(c.QueryParam("p"))
 	skip := (p-1)*pn
-	story.GetPageData(skip, pn, &storyList)
+	selector := map[string]int{"cate":1,"title":1, "body":1}
+	story.GetPageData(skip, pn, selector, &storyList)
+
+	//time.Sleep(10*time.Second)
 
 	return c.JSON(http.StatusOK, storyList)
 }
