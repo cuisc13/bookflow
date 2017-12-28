@@ -6,6 +6,7 @@ import (
 	"html/template"
 )
 
+// TmpelateRender ...
 type TemplateRenderer struct {
 	templates *template.Template
 }

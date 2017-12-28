@@ -54,7 +54,7 @@ func (this *Controller_stroy)Tell(c echo.Context)error {
 	//text = "我是谁"
 
 	body := reBody{
-		tok:"24.5f2499a9d223eae3e80c6352966d22b8.2592000.1510646871.282335-10241789",
+		tok:"24.56f654b217197fc345e95f004bd98067.2592000.1517095892.282335-10241789",
 		ctp:"1",
 		cuid:"iid",
 		spd:"3",
